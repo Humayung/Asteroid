@@ -68,7 +68,7 @@ public class Asteroid {
     }
 
     boolean disintegrate(){
-        health -= 50;
+        health = 0;
         return health <= 0;
     }
 

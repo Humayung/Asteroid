@@ -12,6 +12,7 @@ public class Ship {
     PVector pos;
     PVector vel;
     PVector acc;
+    boolean debug = false;
     float fuel = 1;
     float rotation = 0;
     final float speed = 0.1f;
@@ -24,14 +25,16 @@ public class Ship {
     int inputCount;
     int cooldown = 0;
     Laser laser;
+    int asteroidNum;
 
-    Ship(PApplet pApplet, int raysNum) {
+    Ship(PApplet pApplet, int raysNum, int asteroidNum) {
         t = pApplet;
+        this.asteroidNum = asteroidNum;
         pos = new PVector(t.width / 2, t.height / 2);
         vel = new PVector();
         acc = new PVector();
         rays = new Ray[raysNum];
-        inputCount = rays.length + 1 + 1;
+        inputCount = rays.length + 1;
 
         float angle = TWO_PI / rays.length;
         for (int i = 0; i < rays.length; i++) {
@@ -73,17 +76,15 @@ public class Ship {
         t.background(51);
         switch (action) {
             case 0:
-                break;
-            case 1:
                 boost();
                 break;
-            case 2:
+            case 1:
                 rotate(speed);
                 break;
-            case 3:
+            case 2:
                 rotate(-speed);
                 break;
-            case 4:
+            case 3:
                 beam();
         }
 
@@ -92,12 +93,13 @@ public class Ship {
         reward = updateLaser();
         updateAsteroids();
         draw();
-        if (dead) reward -= 3;
-        return new Res(reward, checkDone());
+        boolean done = checkDone();
+        if (dead) reward -= 0.1;
+        return new Res(reward, done);
     }
 
     public int getNumAction() {
-        return 5;
+        return 4;
     }
 
     float updateLaser() {
@@ -122,12 +124,17 @@ public class Ship {
         return t.frameCount - chargeStart > 100;
     }
 
+    boolean canShot(){
+        return cooldown <= 0;
+    }
+
     void beam() {
         boolean hit = false;
         resetCharge();
-        if (fuel > 0.08f) {
+        if (canShot()) {
             laser.beam();
-            fuel -= 0.02f;
+            cooldown = 30;
+//            fuel -= 0.02f;
         }
     }
 
@@ -141,7 +148,7 @@ public class Ship {
             asteroid.draw();
             asteroid.update();
         }
-        if (t.random(1) < 0.001) {
+        if (t.random(1) < 0.005) {
             float x = t.random(t.width);
             float y = t.random(1) < 0.5f ? 0 : t.height;
             asteroids.add(new Asteroid(t, x, y));
@@ -150,7 +157,7 @@ public class Ship {
 
     void createAsteroids() {
         asteroids = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < asteroidNum; i++) {
             float x = t.random(t.width);
             float y = t.random(1) < 0.5f ? 0 : t.height;
             asteroids.add(new Asteroid(t, x, y));
@@ -184,14 +191,16 @@ public class Ship {
             PVector pt = getState(ray);
             if (pt != null) {
                 float d = pos.dist(pt);
-                inputs[i] = t.map(d, 0, t.width, 1, 0);
+                inputs[i] = t.map(d, 0, max(t.width, t.height), 1, 0);
+                if(debug){
+                    t.line(pos.x, pos.y, pt.x, pt.y);
+                }
             } else {
                 inputs[i] = 0;
             }
             ray.rotate(rotation);
         }
-        inputs[inputCount - 1] = fuel;
-        inputs[inputCount - 2] = isRecharge() ? 1 : 0;
+        inputs[inputCount - 1] = canShot() ? 1 : 0;
         return inputs;
     }
 

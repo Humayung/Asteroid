@@ -11,19 +11,20 @@ public class Main extends PApplet {
     }
 
     public void setup(){
-        ship = new Ship(this, 0);
+        ship = new Ship(this, 64, 13);
     }
     public void draw(){
         int action = getKey();
         Ship.Res res = ship.step(action);
-        if(res.reward > 0){
+        if(res.reward != 0){
             System.out.println(res.reward);
         }
         if(res.done) reset();
+        ship.getState();
     }
 
     void reset(){
-        ship = new Ship(this, 0);
+        ship = new Ship(this, 40, 13);
     }
 
     int getKey(){

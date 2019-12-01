@@ -14,7 +14,7 @@ public class Laser {
     PVector pos;
     int lifespan = 255;
     boolean off = false;
-    final int range = 300;
+    final int range = 450;
     boolean beam = false;
 
     Laser(PApplet t, Ship ship) {
@@ -40,6 +40,9 @@ public class Laser {
             float x = pos.x + cos(a) * range;
             float y = pos.y + sin(a) * range;
             t.line(pos.x, pos.y, x, y);
+            if(beam){
+                reward = -0.01f;
+            }
         }
         lifespan = max(lifespan - 10, 0);
         off = lifespan <= 0;
