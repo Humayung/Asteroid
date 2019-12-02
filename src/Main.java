@@ -11,29 +11,33 @@ public class Main extends PApplet {
     }
 
     public void setup(){
-        ship = new Ship(this, 64, 13);
+        ship = new Ship(this, 128, 13);
+        ship.debug = true;
     }
     public void draw(){
         int action = getKey();
-        Ship.Res res = ship.step(action);
-        if(res.reward != 0){
-            System.out.println(res.reward);
+        Ship.Res res = null;
+        if(action < 4) {
+            res = ship.step(action);
+            if (res.reward != 0) {
+                System.out.println(res.reward);
+            }
+            if (res.done) reset();
+            ship.getState();
         }
-        if(res.done) reset();
-        ship.getState();
     }
 
     void reset(){
-        ship = new Ship(this, 40, 13);
+        ship = new Ship(this, 128, 13);
     }
 
     int getKey(){
         if(keyPressed){
-            if(keyCode == UP) return 1;
-            if(keyCode == RIGHT) return 2;
-            if(keyCode == LEFT) return 3;
-            if(key == ' ') return 4;
+            if(keyCode == UP) return 0;
+            if(keyCode == RIGHT) return 1;
+            if(keyCode == LEFT) return 2;
+            if(key == ' ') return 3;
         }
-        return 0;
+        return 9;
     }
 }

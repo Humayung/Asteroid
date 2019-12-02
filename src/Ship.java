@@ -15,13 +15,12 @@ public class Ship {
     boolean debug = false;
     float fuel = 1;
     float rotation = 0;
-    final float speed = 0.1f;
+    final float speed = 0.15f;
     boolean boosting = false;
     int lifeSpan;
     boolean dead = false;
     Ray[] rays;
-    float maxSpeed = 9;
-    int invulnerable = 100;
+    float maxSpeed = 10;
     int inputCount;
     int cooldown = 0;
     Laser laser;
@@ -34,7 +33,7 @@ public class Ship {
         vel = new PVector();
         acc = new PVector();
         rays = new Ray[raysNum];
-        inputCount = rays.length + 1;
+        inputCount = rays.length * 2 + 1;
 
         float angle = TWO_PI / rays.length;
         for (int i = 0; i < rays.length; i++) {
@@ -94,7 +93,7 @@ public class Ship {
         updateAsteroids();
         draw();
         boolean done = checkDone();
-        if (dead) reward -= 0.1;
+        if (dead) reward -= 1;
         return new Res(reward, done);
     }
 
@@ -165,13 +164,15 @@ public class Ship {
     }
 
 
-    PVector getState(Ray ray) {
+    HitData getState(Ray ray) {
         PVector closest = null;
+        Asteroid hit = null;
         float record = Float.POSITIVE_INFINITY;
         for (Asteroid a : asteroids) {
             for (Boundary b : a.edges) {
                 final PVector pt = ray.cast(b);
                 if (pt != null) {
+                    hit = a;
                     final float d = PVector.dist(pos, pt);
                     if (d < record) {
                         record = d;
@@ -180,20 +181,36 @@ public class Ship {
                 }
             }
         }
-        return closest;
+        return new HitData(hit, closest);
+    }
+
+    class HitData{
+        Asteroid asteroid;
+        PVector intersection;
+        HitData(Asteroid asteroid, PVector intersection){
+            this.asteroid = asteroid;
+            this.intersection = intersection;
+        }
     }
 
     public float[] getState() {
         float[] inputs = new float[inputCount];
         t.stroke(255);
-        for (int i = 0; i < rays.length; i++) {
+        for (int i = 0; i < rays.length; i+=2) {
             Ray ray = rays[i];
-            PVector pt = getState(ray);
-            if (pt != null) {
-                float d = pos.dist(pt);
-                inputs[i] = t.map(d, 0, max(t.width, t.height), 1, 0);
+            HitData hitData = getState(ray);
+            if (hitData.intersection != null) {
+                float d = pos.dist(hitData.intersection);
+//                inputs[i] = map(d, 0, t.width, 1, 0);
+                d /= 10;
+                d = d < 1 ? 1 : d;
+                inputs[i] = 1/d;
+                PVector towards = PVector.sub(pos, hitData.asteroid.pos);
+                towards.normalize();
+                float redShift = hitData.asteroid.vel.dot(towards);
+                inputs[i+1] = redShift;
                 if(debug){
-                    t.line(pos.x, pos.y, pt.x, pt.y);
+                    t.line(pos.x, pos.y, hitData.intersection.x, hitData.intersection.y);
                 }
             } else {
                 inputs[i] = 0;
@@ -228,7 +245,7 @@ public class Ship {
     }
 
     void boost() {
-        PVector force = PVector.fromAngle(rotation).setMag(0.45f);
+        PVector force = PVector.fromAngle(rotation).setMag(0.5f);
         vel.add(force);
         boosting = true;
     }

@@ -33,7 +33,7 @@ public class Laser {
         if (pt != null) {
             t.line(pt.x, pt.y, pos.x, pos.y);
             if(beam) {
-                reward = 0.01f;
+                reward = 0.08f;
             }
         }else{
             float a = ship.rotation;

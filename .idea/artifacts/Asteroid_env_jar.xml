@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Asteroid-env:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Asteroid_env_jar</output-path>
+    <root id="archive" name="Asteroid.jar">
+      <element id="module-output" name="Asteroid" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/library/core.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/library/gluegen-rt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/library/jogl-all.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
