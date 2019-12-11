@@ -7,16 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82dc685a-1cc7-4b0b-b51f-7a6aaafa6035" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Asteroid_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Asteroid_env_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Asteroid_jar/Asteroid.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Asteroid_jar/Asteroid.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Asteroid/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Asteroid/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Asteroid/Ship$Res.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Asteroid/Ship$Res.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Asteroid/Ship.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Asteroid/Ship.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Asteroid_env_jar/Asteroid.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Asteroid_env_jar/Asteroid.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Asteroid/Laser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Asteroid/Laser.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Laser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Laser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ship.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

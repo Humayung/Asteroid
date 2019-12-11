@@ -33,16 +33,13 @@ public class Laser {
         if (pt != null) {
             t.line(pt.x, pt.y, pos.x, pos.y);
             if(beam) {
-                reward = 0.08f;
+                reward = 0.1f;
             }
         }else{
             float a = ship.rotation;
             float x = pos.x + cos(a) * range;
             float y = pos.y + sin(a) * range;
             t.line(pos.x, pos.y, x, y);
-            if(beam){
-                reward = -0.01f;
-            }
         }
         lifespan = max(lifespan - 10, 0);
         off = lifespan <= 0;
